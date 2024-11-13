@@ -1,0 +1,40 @@
+services:
+  api:
+    build: .
+    container_name: api
+    image: licc/api:0.0.1
+    ports:
+      - 7860:7860
+    environment:
+      - CHANGEME_MYSQL__HOST=mysql
+      - CHANGEME_MYSQL__PORT=3306
+      - CHANGEME_MYSQL__DB=demo
+      - CHANGEME_MYSQL__USERNAME=root
+      - CHANGEME_MYSQL__PASSWORD=1234
+    restart: on-failure
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_DATABASE: demo
+      TZ: Asia/Shanghai
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "exit | mysql -u root -p1234"]
+      start_period: 30s
+      interval: 20s
+      timeout: 10s
+      retries: 4
+    restart: on-failure
+
+volumes:
+  mysql_data:
+    driver: local
