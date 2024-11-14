@@ -2,7 +2,7 @@
 
 > 注意：本项目中的Dockerfile与Docker compose还未测试完成
 
-这是Fastapi Demo项目，包含使用Fastapi与Sqlmode库实现web程序的样例。
+这是Fastapi Demo项目，包含使用Fastapi与Sqlmodel库实现web程序的样例。
 
 ## 环境准备
 
